@@ -347,7 +347,7 @@ function cr_get_my_reports($courseid, $userid, $allcourses=true){
     $output .= '</table>'."\n";
     $output .= '<input type="hidden" name="courseid" value="'.$COURSE->id.'">';
     if ($isuserid != -1) {
-        $output .= '<input type="submit" value="send emails">';
+        $output .= '<input type="submit" value="'.get_string('sendemails','block_configurable_reports').'">';
     }
     $output .= '</form>';
 

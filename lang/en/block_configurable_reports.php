@@ -110,6 +110,7 @@ $string['filteruser_summary'] = 'Filter a user (id) from current course users';
 $string['users'] = 'System user (id)';
 $string['filterusers'] = 'System user';
 $string['filterusers_summary'] = 'Filter a user (by id) from system user list';
+$string['enrolledstudents'] = 'Enrolled course students';
 $string['filterenrolledstudents'] = 'Enrolled course students';
 $string['filterenrolledstudents_summary'] = 'Filter a user (by id) from enrolled course students';
 $string['student'] = 'Student';
@@ -407,4 +408,6 @@ $string['reporttableuiinfo'] = 'Display the report table as: Simple scrollable H
 $string['email_subject'] = 'Subject';
 $string['email_message'] = 'Message';
 $string['email_send'] = 'Send';
+$string['sendemails'] = 'Send eMails';
+
 
