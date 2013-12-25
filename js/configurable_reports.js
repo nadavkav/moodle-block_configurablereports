@@ -132,7 +132,7 @@ var editor_remotequerysql = CodeMirror.fromTextArea(document.getElementById('id_
     indentWithTabs: true,
     smartIndent: true,
     lineNumbers: true,
-    matchBrackets : true,
+    matchBrackets : true
 //    autofocus: true
 });
 

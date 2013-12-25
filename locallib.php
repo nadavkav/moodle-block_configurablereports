@@ -44,7 +44,6 @@
   }
 
     function cr_add_jsdatatables($cssid){
-        global $DB, $CFG, $OUTPUT;
 
         echo html_writer::script(false, new moodle_url('/blocks/configurable_reports/js/datatables/media/js/jquery.js'));
         echo html_writer::script(false, new moodle_url('/blocks/configurable_reports/js/datatables/media/js/jquery.dataTables.min.js'));
