@@ -114,6 +114,12 @@
 		die;
 	}
 
+    if (get_config('block_configurable_reports', 'reporttableui') == 'datatables') {
+        //@import url("../blocks/configurable_reports/js/datatables/media/css/jquery.dataTables.css");
+        $datatables_css = file_get_contents('js/datatables/media/css/jquery.dataTables.css');
+        echo "<style>$datatables_css</style>";
+    }
+
 	// Never reached if download = true
     echo $OUTPUT->footer();
 
