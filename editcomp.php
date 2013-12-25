@@ -207,5 +207,13 @@ if(! has_capability('block/configurable_reports:managereports', $context) && ! h
 		echo '</div>';
 	}
 
-	echo $OUTPUT->footer();
+    if (get_config('block_configurable_reports', 'sqlsyntaxhighlight')) {
+        //@import url("../blocks/configurable_reports/js/codemirror/lib/codemirror.css");
+        //@import url("../blocks/configurable_reports/js/codemirror/addon/display/fullscreen.css");
+        $codemirror_css1 = file_get_contents('js/codemirror/lib/codemirror.css');
+        $codemirror_css2 = file_get_contents('js/codemirror/addon/display/fullscreen.css');
+        echo "<style>$codemirror_css1</style>";
+        echo "<style>$codemirror_css2</style>";
+    }
 
+	echo $OUTPUT->footer();
