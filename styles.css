@@ -9,6 +9,26 @@
 #page-blocks-configurable_reports-editreport.dir-rtl textarea,
 #page-blocks-configurable_reports-editreport.dir-rtl .felement.fstatic {text-align: left;direction: ltr;}
 
+#page-blocks-configurable_reports-editreport.dir-rtl #fitem_id_querysql .ftextarea {
+    float: right;
+    width: 66%;
+    margin: 0;
+}
+#page-blocks-configurable_reports-editreport.dir-rtl #fitem_id_querysql .fitemtitle {width: 85%;}
+
+@media (min-width: 1110px) and (max-width: 1220px) {
+
+    #page-blocks-configurable_reports-editreport.dir-rtl #fitem_id_querysql .ftextarea {
+        width: 73%;
+    }
+}
+
+@media (min-width: 1220px) and (max-width: 1440px) {
+
+    #page-blocks-configurable_reports-editreport.dir-rtl #fitem_id_querysql .ftextarea {
+        width: 90%;
+    }
+}
 /* Fix table header padding, to show "Sort" arrows
 */
 #reportslist th.header {padding: 0 20px;}
@@ -43,6 +63,10 @@
 #page-blocks-configurable_reports-viewreport #lastexecutiontime {
     padding: 10px;
     text-align: center;
+}
+
+#page-blocks-configurable_reports-viewreport .generaltable th.header {
+    padding-right: 16px;
 }
 
 /* Convert "Add report" link to a beautiful button
