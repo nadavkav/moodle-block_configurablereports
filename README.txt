@@ -40,6 +40,8 @@ Major updates:
 * Control report row limit
 * Move report from course level to system level ( add "&adminmode=1" to report setting page's URL and change report's courseid at the bottom of the form)
 * %%COURSEID%% can be overridden be using "&courseid=XXX" on the report's URL.
+* Hide sub-reports from the list.
+* Enable unique aliases to each report, so they can be invoked by other reports persistently across Moodle systems.
 
 New JavaScript libraries
 ========================
