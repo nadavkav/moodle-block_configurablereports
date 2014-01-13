@@ -28,6 +28,9 @@ if ($ADMIN->fulltree) {
 //    $settings->add(new admin_setting_configcheckbox('block_configurable_reports/datatables', get_string('datatables', 'block_configurable_reports'),
 //        get_string('datatablesinfo', 'block_configurable_reports'), 0));
 
+    $settings->add(new admin_setting_configtext('block_configurable_reports/reportlimit', get_string('reportlimit', 'block_configurable_reports'),
+        get_string('reportlimitinfo', 'block_configurable_reports'), '5000', PARAM_INT, 6));
+
 }
 
 

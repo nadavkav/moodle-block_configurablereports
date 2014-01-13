@@ -49,6 +49,10 @@ $string['cron'] = 'Auto run daily';
 $string['crondescription'] = 'Schedule this query to run each day (At night)';
 $string['cron_help'] = 'Schedule this query to run each day (At night)';
 $string['setcourseid'] = 'Set courseid';
+$string['subreport'] = 'Sub Report';
+$string['subreport_help'] = 'This is a sub-report, and it will not be visible to Teachers on the report list, but can be invoked by another report. (Using the Alias or Report ID)';
+$string['alias'] = 'Unique English Alias';
+$string['alias_help'] = 'A unique English alias that is used by other reports to invoke this report + pass initial parameters to run the report properly.';
 
 // Columns
 $string['column'] = "Column";
@@ -387,6 +391,10 @@ $string['dbuser'] = "DB Username";
 $string['dbuserinfo'] = "Remote Database username (should have SELECT privileges on above DB)";
 $string['dbpass'] = "DB Password";
 $string['dbpassinfo'] = "Remote Database password (for above username)";
+$string['reportlimit'] = "Report row limit";
+$string['reportlimitinfo'] = "Limit the number of rows that are displayed in the report table (Default is 5000 rows. Better to have some limit, so users will not over load the DB engine)";
+
+
 
 $string['totalrecords'] = 'Total record count = {$a->totalrecords}';
 $string['lastexecutiontime'] = 'Execution time = {$a} (Sec)';
