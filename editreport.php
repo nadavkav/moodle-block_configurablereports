@@ -175,6 +175,11 @@
 		else
 			$reportclassname = 'report_'.$report->type;
 
+        // Handle checkbox values
+        $data->cron = ($data->cron == 1) ? 1 : 0;
+        $data->jsordering = ($data->jsordering == 1) ? 1 : 0;
+        $data->subreport = ($data->subreport == 1) ? 1 : 0;
+
 		$arraydata = (array) $data;
 		$data->export = '';
 		foreach($arraydata as $key=>$d){

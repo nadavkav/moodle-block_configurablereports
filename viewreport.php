@@ -25,13 +25,24 @@
     require_once("../../config.php");
 	require_once($CFG->dirroot."/blocks/configurable_reports/locallib.php");
 
-	$id = required_param('id', PARAM_INT);
+	$id = optional_param('id', 0, PARAM_INT);
 	$download = optional_param('download',false,PARAM_BOOL);
 	$format = optional_param('format','',PARAM_ALPHA);
     $courseid = optional_param('courseid', null, PARAM_INT);
+    $alias = optional_param('alias','',PARAM_ALPHA);
 
-	if(! $report = $DB->get_record('block_configurable_reports',array('id' => $id)))
-		print_error('reportdoesnotexists','block_configurable_reports');
+    if ($id == 0 AND $alias == '')
+        print_error("Please supply report ID or Alias to run the report");
+
+    if (!empty($alias)) {
+        if(! $report = $DB->get_record('block_configurable_reports',array('alias' => $alias)))
+            print_error('reportdoesnotexists','block_configurable_reports');
+
+    } else {
+
+        if(! $report = $DB->get_record('block_configurable_reports',array('id' => $id)))
+            print_error('reportdoesnotexists','block_configurable_reports');
+    }
 
     // Ignore report's courseid, If we are running this report on a specific courseid
     // (For permission checks)

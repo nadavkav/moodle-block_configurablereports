@@ -18,7 +18,9 @@
         <FIELD NAME="export" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"  PREVIOUS="components" NEXT="jsordering"/>
         <FIELD NAME="jsordering" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  PREVIOUS="export" NEXT="lastexecutiontime"/>
         <FIELD NAME="lastexecutiontime" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Time this report took to run last time it was executed, in milliseconds." PREVIOUS="jsordering" NEXT="cron"/>
-        <FIELD NAME="cron" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false"  PREVIOUS="lastexecutiontime" COMMENT="Should we run this query on regular CRON"/>
+        <FIELD NAME="cron" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false"  PREVIOUS="lastexecutiontime" NEXT="subreport" COMMENT="Should we run this query on regular CRON"/>
+        <FIELD NAME="subreport" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  PREVIOUS="cron" NEXT="alias" COMMENT="Indicate if current report is invisible to regular user and can only be invoked by a main report"/>
+        <FIELD NAME="alias" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"  PREVIOUS="subreport" COMMENT="Unique English Alias that is used to invoke this sub-report by other reports"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

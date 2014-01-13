@@ -46,7 +46,14 @@ class report_edit_form extends moodleform {
         }
         $mform->addRule('name', null, 'required', null, 'client');
 
-		$mform->addElement('htmleditor', 'summary', get_string('summary'));
+        $mform->addElement('text', 'alias', get_string('alias','block_configurable_reports'),array('maxlength' => 64, 'size' => 30));
+        $mform->addHelpButton('alias','alias', 'block_configurable_reports');
+
+        $mform->addElement('checkbox', 'subreport', get_string('subreport','block_configurable_reports') /*,get_string('subreportdescription','block_configurable_reports')*/ );
+        $mform->addHelpButton('subreport', 'subreport', 'block_configurable_reports');
+        $mform->setDefault('subreport', 0);
+
+        $mform->addElement('htmleditor', 'summary', get_string('summary'));
         $mform->setType('summary', PARAM_RAW);
 
         $typeoptions = cr_get_report_plugins($this->_customdata['courseid']);
@@ -62,15 +69,15 @@ class report_edit_form extends moodleform {
 			$pagoptions[$i] = $i;
 		$mform->addElement('select', 'pagination', get_string("pagination",'block_configurable_reports'), $pagoptions);
 		$mform->setDefault('pagination',0);
-		$mform->addHelpButton('pagination','pagination', 'block_configurable_reports');
+		$mform->addHelpButton('pagination', 'pagination', 'block_configurable_reports');
 
-		$mform->addElement('checkbox','jsordering',get_string('ordering','block_configurable_reports'),get_string('enablejsordering','block_configurable_reports'));
+		$mform->addElement('checkbox','jsordering',get_string('ordering','block_configurable_reports'), get_string('enablejsordering','block_configurable_reports'));
 		$mform->addHelpButton('jsordering','jsordering', 'block_configurable_reports');
         $mform->setDefault('jsordering',1);
 
-        $mform->addElement('checkbox','cron',get_string('cron','block_configurable_reports'),get_string('crondescription','block_configurable_reports'));
-        $mform->addHelpButton('cron','cron', 'block_configurable_reports');
-        $mform->setDefault('cron',0);
+        $mform->addElement('checkbox', 'cron', get_string('cron','block_configurable_reports'), get_string('crondescription','block_configurable_reports'));
+        $mform->addHelpButton('cron', 'cron', 'block_configurable_reports');
+        $mform->setDefault('cron', 0);
 
         $mform->addElement('header', 'exportoptions', get_string('exportoptions', 'block_configurable_reports'));
 		$options = cr_get_export_plugins();
