@@ -114,6 +114,8 @@ $string['enrolledstudents'] = 'תלמידים בקורס';
 $string['filterenrolledstudents'] = 'תלמידים בקורס';
 $string['filterenrolledstudents_summary'] = 'מסנן לפי קוד משתמש מתוך רשימת התלמידים בקורס';
 $string['student'] = 'תלמיד';
+$string['filtermycourses'] = 'הקורסים שלי';
+$string['filtermycourses_summary'] = "מסנן זה מציג רשימה של קורסים בהם המשתמש המפיק את הדוח רשום בתפקיד כלשהו, ניתן לבחור רק קורס אחד באותו זמן";
 
 $string['addfiltersorfullreport'] = '<div style="font-size: 18px;" >ניתן להשתמש במסננים להעיל לשם תצוגת הדוח <br/> או...<br/> להקליק על הכפתור "תצוגת דוח מלא" לצפיה בדוח המלא.</div>';
 $string['displayfullreport'] = 'תצוגת דוח מלא';
