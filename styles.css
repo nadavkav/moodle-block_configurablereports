@@ -118,3 +118,7 @@
      position:relative;
      top:1px;
  }
+
+#page-blocks-configurable_reports-viewreport .fullreportbutton {
+    text-align: center;
+}

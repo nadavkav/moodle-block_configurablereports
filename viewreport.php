@@ -76,6 +76,54 @@
 	$PAGE->set_pagelayout('report');
 	$PAGE->set_url('/blocks/configurable_reports/viewreport.php', array('id'=>$id));
 
+    $components = cr_unserialize($reportclass->config->components);
+    $filters = (isset($components['filters']['elements']))? $components['filters']['elements']: array();
+
+    // Display full report or Enable the user to use the filters first
+    if(!empty($filters) AND empty($_GET['fullreport'])) {
+        // Do we have any filters in this report?
+        // & we are not yet requested to display a full report...
+        $filterisactive = false;
+        $request = array_merge($_POST, $_GET);
+        if($request)
+            foreach($request as $key=>$val)
+                if(strpos($key,'filter_') !== false) {
+                    //echo "filter is active";
+                    $filterisactive = true;
+                }
+
+        if (!$filterisactive) { // Is this report request was to get full report without filters?
+            // Have to initiate some $PAGE settings.
+            $reportname = format_string($report->name);
+            $PAGE->set_title($reportname);
+            $PAGE->set_heading( $reportname);
+            $PAGE->set_cacheable( true);
+            echo $OUTPUT->header();
+
+            if(has_capability('block/configurable_reports:managereports', $context) || (has_capability('block/configurable_reports:manageownreports', $context)) && $report->ownerid == $USER->id ){
+                $currenttab = 'viewreport';
+                include('tabs.php');
+            }
+
+            if (!$download) { // We are probably not downloading anything, just in case.
+                $reportclass->check_filters_request(); // Prepare filter Form.
+                $reportclass->print_filters();
+            }
+
+            echo $OUTPUT->notification(get_string('addfiltersorfullreport','block_configurable_reports'));
+            $paramcourseid = (!empty($_GET['courseid'])) ? '&courseid='.$_GET['courseid'] : '';
+            $fullreporturl = new moodle_url('viewreport.php?id='.$_GET['id'].$paramcourseid.'&fullreport=1');
+            $button = new single_button($fullreporturl, get_string('displayfullreport','block_configurable_reports'), 'get');
+            $button->class = 'fullreportbutton';
+
+            echo $OUTPUT->render($button);
+            //echo $OUTPUT->continue_button($fullreporturl);
+            echo $OUTPUT->footer();
+            die;
+        }
+
+    }
+
 	$reportclass->create_report();
 
 	$download = ($download && $format && strpos($report->export,$format.',') !== false)? true : false;
@@ -107,12 +155,12 @@
 		$PAGE->set_cacheable( true);
 		echo $OUTPUT->header();
 
-		if(has_capability('block/configurable_reports:managereports', $context) || (has_capability('block/configurable_reports:manageownreports', $context)) && $report->ownerid == $USER->id ){
+        if(has_capability('block/configurable_reports:managereports', $context) || (has_capability('block/configurable_reports:manageownreports', $context)) && $report->ownerid == $USER->id ){
 			$currenttab = 'viewreport';
 			include('tabs.php');
 		}
 
-		// Print the report HTML
+        // Print the report HTML
         $reportclass->print_report_page($context);
 
 	} else {

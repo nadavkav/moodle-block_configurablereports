@@ -119,6 +119,9 @@ $string['filterenrolledstudents'] = 'Enrolled course students';
 $string['filterenrolledstudents_summary'] = 'Filter a user (by id) from enrolled course students';
 $string['student'] = 'Student';
 
+$string['addfiltersorfullreport'] = '<div style="font-size: 18px;" >You can use the above filters <br/>or...<br/> click the following "Display full report" button.</div>';
+$string['displayfullreport'] = 'Display full report';
+
 // Calcs
 $string['nocalcsyet'] = "No calculations yet";
 
