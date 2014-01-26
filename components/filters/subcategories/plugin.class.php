@@ -55,7 +55,7 @@ class plugin_subcategories extends plugin_base{
 	}
 
 	function print_filter(&$mform){
-		global $remoteDB, $CFG;
+		global $remoteDB;
 
 		$filter_subcategories = optional_param('filter_subcategories',0,PARAM_INT);
 
@@ -67,9 +67,8 @@ class plugin_subcategories extends plugin_base{
 			$conditions = $components['conditions'];
 
 			$subcategorieslist = $reportclass->elements_by_conditions($conditions);
-		}
-		else{
-			$subcategorieslist = array_keys($remoteDB->get_records('course_categories'));
+		} else {
+			$subcategorieslist = array_keys($remoteDB->get_records('course_categories', null, 'path'));
 		}
 
 		$courseoptions = array();
@@ -77,10 +76,10 @@ class plugin_subcategories extends plugin_base{
 
 		if(!empty($subcategorieslist)){
 			list($usql, $params) = $remoteDB->get_in_or_equal($subcategorieslist);
-			$subcategories = $remoteDB->get_records_select('course_categories',"id $usql",$params);
+			$subcategories = $remoteDB->get_records_select('course_categories', "id $usql", $params, 'path');
 
 			foreach($subcategories as $c){
-				$courseoptions[$c->id] = format_string($c->name);
+				$courseoptions[$c->id] = str_repeat('&nbsp&nbsp&nbsp', $c->depth).' '.format_string($c->name);
 			}
 		}
 
