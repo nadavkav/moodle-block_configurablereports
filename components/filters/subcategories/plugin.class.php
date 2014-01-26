@@ -47,7 +47,7 @@ class plugin_subcategories extends plugin_base{
             return array($filter_subcategories);
 		} else {
 			if (preg_match("/%%FILTER_SUBCATEGORIES:([^%]+)%%/i",$finalelements, $output)) {
-				$replace = ' AND '.$output[1].' LIKE CONCAT( \'%/\', '.$filter_subcategories.', \'%\' ) ';
+				$replace = ' AND ('.$output[1].' LIKE CONCAT( \'%/\', '.$filter_subcategories.') OR '.$output[1].' LIKE CONCAT( \'%/\', '.$filter_subcategories.', \'/%\') ) ';
 				return str_replace('%%FILTER_SUBCATEGORIES:'.$output[1].'%%', $replace, $finalelements);
 			}
 		}
