@@ -29,6 +29,7 @@ if (!defined('MOODLE_INTERNAL')) {
 require_once($CFG->libdir.'/formslib.php');
 
 class import_form extends moodleform {
+
     function definition() {
         global $DB, $USER, $CFG;
 
@@ -40,7 +41,7 @@ class import_form extends moodleform {
 		$mform->setType('userfile', PARAM_FILE);
 		$mform->addRule('userfile', null, 'required');
 
-		$mform->addElement('hidden','courseid',$this->_customdata);
+		$mform->addElement('hidden','courseid', $this->_customdata['courseid']);
         $mform->setType('courseid', PARAM_INT);
 
         // buttons
