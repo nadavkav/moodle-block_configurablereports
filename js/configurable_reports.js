@@ -101,7 +101,24 @@ M.block_configurable_reports = {
                 }
             }
         });
+    },
+
+    onclick_showabout : function (element) {
+        var Y = this.Y;
+
+        //select_reportsincategory = Y.one('#id_reportsincategory');
+        //select_reportsincategory.setHTML('');
+
+        aboutsummaryelement = '#' + element.parentNode.id + ' .reportsummary';
+        aboutsummary = Y.one(aboutsummaryelement);
+        if (aboutsummary.getStyle('display') == 'none') {
+            aboutsummary.setStyle('display', 'block');
+        } else {
+            aboutsummary.setStyle('display', 'none');
+        }
+
     }
+
 }
 
 function menuplugin(event,args) {

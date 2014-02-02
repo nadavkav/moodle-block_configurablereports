@@ -31,7 +31,6 @@
 	if (! $course = $DB->get_record("course", array( "id" =>  $courseid)) ) {
 		print_error("No such course id");
 	}
-
 	// Force user login in course (SITE or Course)
     if ($course->id == SITEID){
 		require_login();
@@ -91,12 +90,16 @@
 	$PAGE->set_title($title);
 	$PAGE->set_heading( $title);
 	$PAGE->set_cacheable( true);
+
+    $PAGE->requires->js('/blocks/configurable_reports/js/configurable_reports.js');
+    $PAGE->requires->js_init_call('M.block_configurable_reports.init');
+
 	echo $OUTPUT->header();
 
 	if($reports){
 		$table = new stdclass;
-		$table->head = array(get_string('name'),get_string('reportsmanage','admin').' '.get_string('course'),get_string('type','block_configurable_reports'),get_string('username'),get_string('edit'),get_string('download','block_configurable_reports'));
-		$table->align = array('left','left','left','left','center','center');
+		$table->head = array('ID',get_string('name'),get_string('reportsmanage','admin').' '.get_string('course'),get_string('type','block_configurable_reports'),get_string('username'),get_string('edit'),get_string('download','block_configurable_reports'));
+		$table->align = array('center','left','left','left','left','center','center');
 		$stredit = get_string('edit');
 		$strdelete = get_string('delete');
 		$strhide = get_string('hide');
@@ -141,7 +144,12 @@
 					}
 			}
 
-			$table->data[] = array('<a href="viewreport.php?id='.$r->id.'">'.$r->name.'</a>',$coursename,get_string('report_'.$r->type,'block_configurable_reports'), $owner, $editcell, $download);
+            if (!empty($r->summary)) {
+                $about = '<span id="aboutreport'.$r->id.'"><img id="aboutimg'.$r->id.'" class="aboutimg" src="pix/help-about.png" onclick="M.block_configurable_reports.onclick_showabout(this);"><span class="reportsummary">'.$r->summary.'</span></span>';
+            } else {
+                $about = '';
+            }
+			$table->data[] = array($r->id, '<a href="viewreport.php?id='.$r->id.'">'.$r->name.'</a>'.$about, $coursename, get_string('report_'.$r->type,'block_configurable_reports'), $owner, $editcell, $download);
 		}
 
 		$table->id = 'reportslist';

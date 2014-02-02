@@ -122,3 +122,6 @@
 #page-blocks-configurable_reports-viewreport .fullreportbutton {
     text-align: center;
 }
+
+#page-blocks-configurable_reports-managereport .aboutimg {padding: 0 10px; width: 16px;}
+#page-blocks-configurable_reports-managereport .reportsummary {display: none;}
