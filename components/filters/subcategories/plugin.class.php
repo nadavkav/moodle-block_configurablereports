@@ -46,7 +46,7 @@ class plugin_subcategories extends plugin_base{
 		if ($this->report->type != 'sql') {
             return array($filter_subcategories);
 		} else {
-			if (preg_match("/%%FILTER_SUBCATEGORIES:([^%]+)%%/i",$finalelements, $output)) {
+			if (preg_match("/%%FILTER_SUBCATEGORIES:([^%]+)%%/i", $finalelements, $output)) {
 				$replace = ' AND ('.$output[1].' LIKE CONCAT( \'%/\', '.$filter_subcategories.') OR '.$output[1].' LIKE CONCAT( \'%/\', '.$filter_subcategories.', \'/%\') ) ';
 				return str_replace('%%FILTER_SUBCATEGORIES:'.$output[1].'%%', $replace, $finalelements);
 			}

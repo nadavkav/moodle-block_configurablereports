@@ -45,11 +45,10 @@ class plugin_courses extends plugin_base{
 
 		if($this->report->type != 'sql'){
 				return array($filter_courses);
-		}
-		else{
-			if(preg_match("/%%FILTER_COURSES:([^%]+)%%/i",$finalelements, $output)){
+		} else {
+			if(preg_match("/%%FILTER_COURSES:([^%]+)%%/i", $finalelements, $output)){
 				$replace = ' AND '.$output[1].' = '.$filter_courses;
-				return str_replace('%%FILTER_COURSES:'.$output[1].'%%',$replace,$finalelements);
+				return str_replace('%%FILTER_COURSES:'.$output[1].'%%', $replace, $finalelements);
 			}
 		}
 		return $finalelements;
