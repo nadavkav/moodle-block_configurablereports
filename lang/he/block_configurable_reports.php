@@ -90,7 +90,7 @@ $string['fcoursefield'] = "מסנן שדות בקורס";
 $string['usersincoursereport'] = "משתמש כלשהו בדוח הקורס הנוכחי";
 $string['subcategories'] = 'קטגוריה (כולל תת־קטגוריות)';
 $string['filtersubcategories'] = 'קטגוריה (כולל תת־קטגוריות)';
-$string['filtersubcategories_summary'] = 'Use: %%FILTER_CATEGORIES:mdl_course_category.path%%';
+$string['filtersubcategories_summary'] = 'Use: %%FILTER_SUBCATEGORIES:mdl_course_category.path%%';
 $string['yearnumeric'] = 'שנה (מספרי)';
 $string['filteryearnumeric'] = 'שנה (מספרי)';
 $string['filteryearnumeric_summary'] = 'מסנן לפי שנים (תצוגה מספרית: 2013, ...)';
@@ -114,6 +114,7 @@ $string['enrolledstudents'] = 'תלמידים בקורס';
 $string['filterenrolledstudents'] = 'תלמידים בקורס';
 $string['filterenrolledstudents_summary'] = 'מסנן לפי קוד משתמש מתוך רשימת התלמידים בקורס';
 $string['student'] = 'תלמיד';
+$string['mycourses'] = 'הקורסים שלי';
 $string['filtermycourses'] = 'הקורסים שלי';
 $string['filtermycourses_summary'] = "מסנן זה מציג רשימה של קורסים בהם המשתמש המפיק את הדוח רשום בתפקיד כלשהו, ניתן לבחור רק קורס אחד באותו זמן";
 
@@ -296,3 +297,7 @@ $string['email_subject'] = 'נושא';
 $string['email_message'] = 'תוכן ההודעה';
 $string['email_send'] = 'שליחה';
 $string['sendemails'] = 'שליחת דואל';
+
+$string['serverload'] = "MySQL max load";
+$string['serverloadinfo'] = "Set the maximum number of running MYSQL threads, above it, reports will not execute (Default is 50)";
+$string['serverloadnotice'] = 'העומס על השרת גבוהה מידיי ({$a}) להפקת הדוח, אנא נסו בעוד מספר דקות שוב.';

@@ -76,6 +76,9 @@
 	$PAGE->set_pagelayout('report');
 	$PAGE->set_url('/blocks/configurable_reports/viewreport.php', array('id'=>$id));
 
+    // If MySQL server loaded? then stop.
+    is_mysqlserver_loaded();
+
     $components = cr_unserialize($reportclass->config->components);
     $filters = (isset($components['filters']['elements']))? $components['filters']['elements']: array();
 
@@ -176,7 +179,7 @@
     if (get_config('block_configurable_reports', 'reporttableui') == 'datatables') {
         //@import url("../blocks/configurable_reports/js/datatables/media/css/jquery.dataTables.css");
         $datatables_css = file_get_contents('js/datatables/media/css/jquery.dataTables.css');
-        echo "<style>$datatables_css</style>";
+        echo "<style>{$datatables_css}</style>";
     }
 
 	// Never reached if download = true

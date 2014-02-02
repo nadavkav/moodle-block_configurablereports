@@ -401,3 +401,44 @@ function table_to_excel($filename,$table){
 
 
 
+function is_mysqlserver_loaded(){
+    global $CFG, $COURSE, $PAGE;
+
+    // Use a custom $remoteDB (and not current system's $DB)
+    // todo: major security issue
+    $remoteDBhost = get_config('block_configurable_reports', 'dbhost');
+    if (empty($remoteDBhost)) {
+        $remoteDBhost = $CFG->dbhost;
+    }
+    $remoteDBuser = get_config('block_configurable_reports', 'dbuser');
+    if (empty($remoteDBuser)) {
+        $remoteDBuser = $CFG->dbuser;
+    }
+    $remoteDBpass = get_config('block_configurable_reports', 'dbpass');
+    if (empty($remoteDBpass)) {
+        $remoteDBpass = $CFG->dbpass;
+    }
+
+    // Test for MYSQL server load before running query.
+    // TODO: using direct php mysql calls, should be an issue with other DBs
+    $link = mysqli_connect($remoteDBhost, $remoteDBuser, $remoteDBpass);
+    //$status = explode('  ', mysql_stat($link));
+
+    // Innodb_row_lock_current_waits
+    //$sql_dbload = "SHOW GLOBAL STATUS WHERE Variable_name = 'Connections'";
+    //$sql_dbload = "SHOW GLOBAL STATUS WHERE Variable_name = 'Threads_running'";
+    $sql_dbload = "SHOW GLOBAL STATUS WHERE Variable_name = 'Threads_connected'";
+
+    $serverload = get_config('block_configurable_reports', 'serverload');
+
+    $result = $link->query($sql_dbload);
+    $row = mysqli_fetch_array($result);
+    //echo $row['Variable_name'] . ' = ' . $row['Value'] . "\n";
+    if ( $row['Value'] > $serverload ) {
+        $PAGE->set_pagelayout('incourse');
+        notice(get_string('serverloadnotice', 'block_configurable_reports', $row['Value']),
+            "$CFG->wwwroot/course/view.php?id={$COURSE->id}");
+    }
+
+    return false;
+}

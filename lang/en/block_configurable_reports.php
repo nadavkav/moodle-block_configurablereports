@@ -94,7 +94,7 @@ $string['filtersemester_summary'] = 'מאפשר סינון לפני סמסטרי
 $string['filtersemester_list'] = 'סמסטר א,סמסטר ב,סמסטר ג,סמינריון';
 $string['subcategories'] = 'Category (Include sub categories)';
 $string['filtersubcategories'] = 'Category (Include sub categories)';
-$string['filtersubcategories_summary'] = 'Use: %%FILTER_CATEGORIES:mdl_course_category.path%%';
+$string['filtersubcategories_summary'] = 'Use: %%FILTER_SUBCATEGORIES:mdl_course_category.path%%';
 $string['yearnumeric'] = 'Year (Numeric)';
 $string['filteryearnumeric'] = 'Year (Numeric)';
 $string['filteryearnumeric_summary'] = 'Filter is using numeric years (2013,...)';
@@ -119,6 +119,7 @@ $string['filterenrolledstudents'] = 'Enrolled course students';
 $string['filterenrolledstudents_summary'] = 'Filter a user (by id) from enrolled course students';
 $string['student'] = 'Student';
 
+$string['mycourses'] = 'My Courses';
 $string['filtermycourses'] = 'My Courses';
 $string['filtermycourses_summary'] = "This filter shows a list of courses, where the report viewing user is enrolled in. Only one course can be selected at the same time";
 
@@ -399,8 +400,9 @@ $string['dbpass'] = "DB Password";
 $string['dbpassinfo'] = "Remote Database password (for above username)";
 $string['reportlimit'] = "Report row limit";
 $string['reportlimitinfo'] = "Limit the number of rows that are displayed in the report table (Default is 5000 rows. Better to have some limit, so users will not over load the DB engine)";
-
-
+$string['serverload'] = "MySQL max load";
+$string['serverloadinfo'] = "Set the maximum number of running MYSQL threads, above it, reports will not execute (Default is 50)";
+$string['serverloadnotice'] = 'Server load is too high ({$a}) to run report, please try again later.';
 
 $string['totalrecords'] = 'Total record count = {$a->totalrecords}';
 $string['lastexecutiontime'] = 'Execution time = {$a} (Sec)';
