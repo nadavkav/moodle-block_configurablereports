@@ -20,6 +20,10 @@ $string['ordering'] = "סידור";
 $string['customsql'] = "שאילתת SQL";
 $string['addreport'] = "הוספת דוח";
 $string['type'] = "סוג הדוח";
+$string['reportcontext'] = 'זמין ב';
+$string['createdby'] = 'נוצר על-ידי: {$a}';
+$string['availabletodownloadas'] = 'זמין בתסדיר: {$a}';
+$string['navbytags'] = 'סינון דוחות לפי תג: ';
 $string['columncalculations'] = "חישובי עמודה";
 $string['newreport'] = "דוח חדש";
 $string['column'] = "עמודה";
@@ -46,6 +50,12 @@ $string['norecordsfound'] = "לא נמצאו רשומות";
 $string['cron'] = 'הפעלה אוטומטית';
 $string['crondescription'] = 'תזמון ביצוע הדוח, באופן קבוע - כל לילה';
 $string['cron_help'] = 'תזמון ביצוע הדוח, באופן קבוע - כל לילה. ניתן לקבוע את זמן ההפעלה של הדוח בהגדרות המערכת של הרכיב';
+$string['subreport'] = 'תת-דוח';
+$string['subreport_help'] = 'This is a sub-report, and it will not be visible to Teachers on the report list, but can be invoked by another report. (Using the Alias or Report ID)';
+$string['alias'] = 'קוד זיהוי דוח<br>(באנגלית וללא רווחים)';
+$string['alias_help'] = 'משמש להפעלה של דוח זה על ידי דוחות חיצוניים.';
+$string['tags'] = 'תגיות<br>(מופרדות ב: פסיק)';
+$string['tags_help'] = 'תגיות משמשות לניהול מספר רב של דוחות. הקליקו על תגית דוח לצפיה בכל הדוחות השייכים לתגית זו. תגיות מופרדות בסימן - פסיק.';
 
 
 // Columns

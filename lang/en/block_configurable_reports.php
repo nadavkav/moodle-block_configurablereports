@@ -20,6 +20,10 @@ $string['ordering'] = "Ordering";
 $string['customsql'] = "Custom SQL";
 $string['addreport'] = "Add report";
 $string['type'] = "Type of report";
+$string['reportcontext'] = 'Available in';
+$string['createdby'] = 'Created by {$a}';
+$string['availabletodownloadas'] = 'Available as: {$a}';
+$string['navbytags'] = 'Filter reports by tags: ';
 $string['columncalculations'] = "Column Calculations";
 $string['newreport'] = "New report";
 $string['column'] = "Column";
@@ -53,6 +57,8 @@ $string['subreport'] = 'Sub Report';
 $string['subreport_help'] = 'This is a sub-report, and it will not be visible to Teachers on the report list, but can be invoked by another report. (Using the Alias or Report ID)';
 $string['alias'] = 'Unique English Alias';
 $string['alias_help'] = 'A unique English alias that is used by other reports to invoke this report + pass initial parameters to run the report properly.';
+$string['tags'] = 'TAGs<br>(divided by comma)';
+$string['tags_help'] = 'TAGs are used to manage reports. TAGs are divided by a comma char.';
 
 // Columns
 $string['column'] = "Column";
