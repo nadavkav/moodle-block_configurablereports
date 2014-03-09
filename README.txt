@@ -42,6 +42,7 @@ Major updates:
 * %%COURSEID%% can be overridden be using "&courseid=XXX" on the report's URL.
 * Hide sub-reports from the list.
 * Enable unique aliases to each report, so they can be invoked by other reports persistently across Moodle systems.
+* Reports TAGs - enable better report management
 
 New JavaScript libraries
 ========================
