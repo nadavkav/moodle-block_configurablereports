@@ -21,7 +21,8 @@
         <FIELD NAME="cron" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false"  PREVIOUS="lastexecutiontime" NEXT="subreport" COMMENT="Should we run this query on regular CRON"/>
         <FIELD NAME="subreport" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  PREVIOUS="cron" NEXT="alias" COMMENT="Indicate if current report is invisible to regular user and can only be invoked by a main report"/>
         <FIELD NAME="alias" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"  PREVIOUS="subreport" NEXT="tags" COMMENT="Unique English Alias that is used to invoke this sub-report by other reports"/>
-        <FIELD NAME="tags" TYPE="char" LENGTH="256" NOTNULL="true" SEQUENCE="false"  PREVIOUS="alias" COMMENT="TAGs to enable better Report management"/>
+        <FIELD NAME="tags" TYPE="char" LENGTH="256" NOTNULL="true" SEQUENCE="false"  PREVIOUS="alias" NEXT="contexttags" COMMENT="TAGs to enable better Report management"/>
+        <FIELD NAME="contexttags" TYPE="char" LENGTH="256" NOTNULL="true" SEQUENCE="false"  PREVIOUS="tags" COMMENT="Context TAGs to enable better Report management"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

@@ -82,6 +82,9 @@ class report_edit_form extends moodleform {
         $mform->addElement('text', 'tags', get_string('tags','block_configurable_reports'),array('maxlength' => 256, 'size' => 50));
         $mform->addHelpButton('tags', 'tags', 'block_configurable_reports');
 
+        $mform->addElement('text', 'contexttags', get_string('contexttags','block_configurable_reports'),array('maxlength' => 256, 'size' => 50));
+        $mform->addHelpButton('contexttags', 'contexttags', 'block_configurable_reports');
+
         $mform->addElement('header', 'exportoptions', get_string('exportoptions', 'block_configurable_reports'));
 		$options = cr_get_export_plugins();
 

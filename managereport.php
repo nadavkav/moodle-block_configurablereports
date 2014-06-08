@@ -28,6 +28,7 @@
 
 	$courseid = optional_param('courseid', SITEID, PARAM_INT);
     $showtags = optional_param('showtags', '', PARAM_RAW);
+    $showcontexttags = optional_param('showcontexttags', '', PARAM_RAW);
 
 	if (! $course = $DB->get_record("course", array( "id" =>  $courseid)) ) {
 		print_error("No such course id");
@@ -101,8 +102,8 @@
 	if($reports){
 		$table = new stdclass;
 		//$table->head = array('ID',get_string('name'),get_string('reportsmanage','admin').' '.get_string('course'),get_string('type','block_configurable_reports'),get_string('username'),get_string('edit'),get_string('download','block_configurable_reports'));
-        $table->head = array('ID', get_string('name'), get_string('reportcontext','block_configurable_reports').' '.get_string('course'), get_string('edit'));
-		$table->align = array('center','left','left','left','center');
+        $table->head = array('ID', get_string('name'), get_string('tagstitle', 'block_configurable_reports'), get_string('contexttagstitle', 'block_configurable_reports'), get_string('reportcontext', 'block_configurable_reports').' '.get_string('course'), get_string('edit'));
+		$table->align = array('center','left','left','left','left','center','center');
 		$stredit = get_string('edit');
 		$strdelete = get_string('delete');
 		$strhide = get_string('hide');
@@ -133,10 +134,38 @@
         $tagsnav = rtrim(rtrim($tagsnav), ',');
         echo html_writer::tag('div', $tagsnav, array('class'=>'tagsnav'));
 
+        // Build Context TAGs navigation.
+        $contexttags = array();
+        foreach($reports as $r) {
+            if (!empty($r->contexttags)) {
+                $contexttaglistraw = explode(',', $r->contexttags);
+                foreach ($contexttaglistraw as $key => $rawtag) {
+                    $contexttaglist[$key] = trim($rawtag);
+                }
+                $contexttagsdiff = array_diff($contexttaglist, $contexttags);
+                $contexttags = array_merge($contexttags, $contexttagsdiff);
+            }
+        }
+        $contexttagsnav = get_string('contextnavbytags','block_configurable_reports');
+        foreach ($contexttags as $tag) {
+            $tag = trim($tag);
+            $contexttagsnav .= html_writer::link(new moodle_url('managereport.php', array('showcontexttags'=>$tag, 'courseid'=>$courseid)), $tag).', ';
+        }
+        if (!empty($showcontexttags))
+            $tagsnav .= html_writer::link('managereport.php?courseid='.$courseid, get_string('all'));
+        $contexttagsnav = rtrim(rtrim($contexttagsnav), ',');
+        echo html_writer::tag('div', $contexttagsnav, array('class'=>'contexttagsnav'));
+
 		foreach($reports as $r){
 
+            // If we filter TAGs, show only reports with selected TAG
             if (!empty($showtags)) {
                 if (strpos($r->tags, $showtags) === false) continue;
+            }
+
+            // If we filter Context_TAGs, show only reports with selected Context_TAG
+            if (!empty($showcontexttags)) {
+                if (strpos($r->contexttags, $showcontexttags) === false) continue;
             }
 
 			if($r->courseid == 1)
@@ -170,7 +199,7 @@
 			if(!empty($export)){
 				foreach($export as $e)
 					if($e){
-						$download .= '<a href="viewreport.php?id='.$r->id.'&amp;download=1&amp;format='.$e.'"><img src="'.$CFG->wwwroot.'/blocks/configurable_reports/export/'.$e.'/pix.gif" alt="'.$e.'">&nbsp;'.(strtoupper($e)).'</a>&nbsp;&nbsp;';
+						$download .= '<a href="viewreport.php?id='.$r->id.'&amp;download=1&amp;format='.$e.'"><img src="'.$CFG->wwwroot.'/blocks/configurable_reports/export/'.$e.'/pix.gif" alt="'.$e.'">&nbsp;'.(strtoupper($e)).'</a>&nbsp;&nbsp;<br>';
 					}
 			}
 
@@ -182,7 +211,7 @@
 
             $tags = '';
             if (!empty($r->tags)) {
-                $tags = get_string('tags').': ';
+                $tags = '';//get_string('tags').': ';
                 $taglist = explode(',', $r->tags);
                 foreach ($taglist as $tag) {
                     $tag = trim($tag);
@@ -193,6 +222,19 @@
             }
             $tags = rtrim(rtrim($tags), ',');
 
+            $contexttags = '';
+            if (!empty($r->contexttags)) {
+                $contexttags = '';//get_string('tags').': ';
+                $contexttaglist = explode(',', $r->contexttags);
+                foreach ($contexttaglist as $tag) {
+                    $tag = trim($tag);
+                    $contexttags .= html_writer::link('managereport.php?courseid='.$courseid.'&showcontexttags='.$tag, $tag).', ';
+                }
+                if (!empty($contexttags))
+                    $contexttags .= html_writer::link('managereport.php?courseid='.$courseid, get_string('all'));
+            }
+            $contexttags = rtrim(rtrim($contexttags), ',');
+
             $courseentry = html_writer::start_tag('div', array('class'=>'reportdata'));
             $courseentry .= html_writer::tag('div',html_writer::link(new moodle_url('viewreport.php', array('id'=>$r->id)), $r->name, array('class'=>'reportname')));
                 if (!empty($r->summary)) {
@@ -200,12 +242,15 @@
                 }
                 $owner = get_string('createdby','block_configurable_reports', $owner);
                 if (!empty($download))
-                    $download = ' | '.get_string('availabletodownloadas','block_configurable_reports', $download);
-                $courseentry .= html_writer::tag('div', $owner.$download.'<br>'.$tags, array('class'=>'reportinfo'));
+                    $download = get_string('availabletodownloadas','block_configurable_reports', $download);
+                $courseentry .= html_writer::tag('div', $owner, array('class'=>'reportinfo'));
             $courseentry .= html_writer::end_tag('div');
 
+            $reporttags = html_writer::tag('div', $tags, array('class'=>'reportinfo tags'));
+            $reportcontexttags = html_writer::tag('div', $contexttags, array('class'=>'reportinfo contexttags'));
+
 			//$table->data[] = array($r->id, '<a href="viewreport.php?id='.$r->id.'">'.$r->name.'</a>'.$about, $coursename, get_string('report_'.$r->type,'block_configurable_reports'), $owner, $editcell, $download);
-            $table->data[] = array($r->id, $courseentry, $coursename, $editcell);
+            $table->data[] = array($r->id, $courseentry, $reporttags, $reportcontexttags, $coursename, $editcell."<br><br>".$download);
 		}
 
 		$table->id = 'reportslist';
