@@ -23,7 +23,8 @@ $string['type'] = "סוג הדוח";
 $string['reportcontext'] = 'זמין ב';
 $string['createdby'] = 'נוצר על-ידי: {$a}';
 $string['availabletodownloadas'] = 'זמין בתסדיר: {$a}';
-$string['navbytags'] = 'סינון דוחות לפי תג: ';
+$string['navbytags'] = 'סינון דוחות לפי חתך: ';
+$string['contextnavbytags'] = 'סינון דוחות לפי רמה: ';
 $string['columncalculations'] = "חישובי עמודה";
 $string['newreport'] = "דוח חדש";
 $string['column'] = "עמודה";
@@ -55,7 +56,11 @@ $string['subreport_help'] = 'This is a sub-report, and it will not be visible to
 $string['alias'] = 'קוד זיהוי דוח<br>(באנגלית וללא רווחים)';
 $string['alias_help'] = 'משמש להפעלה של דוח זה על ידי דוחות חיצוניים.';
 $string['tags'] = 'תגיות<br>(מופרדות ב: פסיק)';
+$string['tagstitle'] = 'חתך';
 $string['tags_help'] = 'תגיות משמשות לניהול מספר רב של דוחות. הקליקו על תגית דוח לצפיה בכל הדוחות השייכים לתגית זו. תגיות מופרדות בסימן - פסיק.';
+$string['contexttags'] = 'רמות<br>(מופרדות ב: פסיק)';
+$string['contexttagstitle'] = 'רמות';
+$string['contexttags_help'] = 'תגיות-רמות משמשות לניהול מספר רב של דוחות. הקליקו על תגית דוח לצפיה בכל הדוחות השייכים לתגית זו. תגיות מופרדות בסימן - פסיק.';
 
 
 // Columns
@@ -127,6 +132,9 @@ $string['student'] = 'תלמיד';
 $string['mycourses'] = 'הקורסים שלי';
 $string['filtermycourses'] = 'הקורסים שלי';
 $string['filtermycourses_summary'] = "מסנן זה מציג רשימה של קורסים בהם המשתמש המפיק את הדוח רשום בתפקיד כלשהו, ניתן לבחור רק קורס אחד באותו זמן";
+$string['coursemodule'] = 'רכיב קורס';
+$string['filtercoursemodule'] = 'רכיב קורס';
+$string['filtercoursemodule_summary'] = 'רכיב קורס מסוג משאב או פעילות Use: %%FILTER_MODULE:mdl_modules.id%%';
 
 $string['addfiltersorfullreport'] = '<div style="font-size: 18px;" >ניתן להשתמש במסננים להעיל לשם תצוגת הדוח <br/> או...<br/> להקליק על הכפתור "תצוגת דוח מלא" לצפיה בדוח המלא.</div>';
 $string['displayfullreport'] = 'תצוגת דוח מלא';
@@ -153,9 +161,9 @@ $string['roleusersn'] = "מספר משתמשים בעלי תפקיד ...";
 $string['coursecategory'] = "קורסים בקטוגוריה";
 $string['filtercourses'] = "קורס";
 $string['filtercourses_summary'] = "מסנן זה מציג רשימה של קורסים , ניתן לבחור רק קורס אחד באותו זמן";
-$string['roleincourse'] = "משתמש עם תפקיד בדוח הקורס הנוכחי";
-$string['reportscapabilities'] = "יכולות דיווח";
-$string['reportscapabilities_summary'] = "משתמשים שיכולת צפייה בדוחות מאופשרת";
+$string['roleincourse'] = "משתמש בעל תפקיד מסויים בקורס בו הדוח מופק";
+$string['reportscapabilities'] = "משתמש בעל הרשאות צפיה בדוחות";
+$string['reportscapabilities_summary'] = "משתמשים שיכולת צפייה בדוחות - moodle/site:viewreports מאופשרת";
 $string['sum'] = "סכום";
 $string['max'] = "מקסימום";
 $string['min'] = "מינימום";
@@ -190,7 +198,7 @@ $string['coursefieldorder'] = "סידור השדות בקורס";
 
 $string['groupvalues'] = "ערכים זהים בקבוצה - סכום";
 
-$string['module'] = "מודול";
+$string['module'] = "רכיב";
 
 $string['usersincurrentcourse'] = "משתמשים בקורס בדוח הנוכחי";
 $string['usersincurrentcourse_summary'] = "משתמשים עם התפקיד-ים הנבחר-ים בקורס המדווח";
@@ -202,7 +210,7 @@ $string['usermodactions'] = "פעולות מודול משתמש";
 $string['currentuser'] = "משתמש נוכחי";
 $string['currentuser_summary'] = "המשתמש הצופה בדוח";
 
-$string['puserfield'] = "ערך שדה משתמש";
+$string['puserfield'] = "משתמש בעל ערך מסויים בשדה פרופיל האישי";
 $string['puserfield_summary'] = "משתמש בעל ערך נבחר בשדה הנבחר";
 
 $string['startendtime'] = "מסנן תאריך התחלה-סיום";
@@ -244,7 +252,7 @@ $string['norowsreturned'] = "לא הוחזרו שורות";
 
 //$string['listofsqlreports'] = 'Press F11 when cursor is in the editor to toggle full screen editing. Esc can also be used to exit full screen editing.<br/><br/><a href="http://docs.moodle.org/en/ad-hoc_contributed_reports" target="_blank">List of SQL Contributed reports</a>';
 
-$string['usersincoursereport_summary'] = "משתמש כלשהו בדוח הקורס הנוכחי";
+$string['usersincoursereport_summary'] = "משתמש כלשהו בקורס בו הדוח מופק";
 
 $string['printreport'] = 'הדפס דוח';
 
@@ -295,6 +303,9 @@ $string['parentcategory'] = 'קטגוריית אב';
 $string['filtercategories'] = 'סינון לפי קטגוריות';
 $string['filtercategories_summary'] = 'סינון לפי קטגוריה אחת';
 $string['includesubcats'] = 'כולל תת־קטגוריות';
+$string['firstlevelcategories'] = 'קטגוריה ראשית (כולל תת־קטגוריות)';
+$string['filterfirstlevelcategories'] = 'סינון לפי קטגוריה ראשית';
+$string['filterfirstlevelcategories_summary'] = 'Use: %%FILTER_FLSUBCATEGORIES:mdl_course_category.path%%';
 
 $string['coursededicationtime'] = 'זמן השקעה בקורס';
 $string['totalrecords'] = 'מספר רשומות בדוח = {$a->totalrecords}';

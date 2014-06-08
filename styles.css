@@ -124,11 +124,16 @@
 }
 
 #page-blocks-configurable_reports-managereport .aboutimg {
-  padding: 0 10px; 
+  padding: 0 10px;
   width: 16px;
 }
 /* #page-blocks-configurable_reports-managereport .reportsummary {display: none;} */
+#page-blocks-configurable_reports-managereport .contexttagsnav,
 #page-blocks-configurable_reports-managereport .tagsnav {
-  text-align: 
+  text-align:
   center;font-size: 18px;
 }
+
+#page-blocks-configurable_reports-managereport .contexttagsnav {margin-bottom: 20px;}
+
+.reportinfo {margin-top: 20px;}

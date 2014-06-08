@@ -24,6 +24,7 @@ $string['reportcontext'] = 'Available in';
 $string['createdby'] = 'Created by {$a}';
 $string['availabletodownloadas'] = 'Available as: {$a}';
 $string['navbytags'] = 'Filter reports by tags: ';
+$string['contextnavbytags'] = 'Filter reports by Context Tags: ';
 $string['columncalculations'] = "Column Calculations";
 $string['newreport'] = "New report";
 $string['column'] = "Column";
@@ -58,7 +59,11 @@ $string['subreport_help'] = 'This is a sub-report, and it will not be visible to
 $string['alias'] = 'Unique English Alias';
 $string['alias_help'] = 'A unique English alias that is used by other reports to invoke this report + pass initial parameters to run the report properly.';
 $string['tags'] = 'TAGs<br>(divided by comma)';
+$string['tagstitle'] = 'TAGs';
 $string['tags_help'] = 'TAGs are used to manage reports. TAGs are divided by a comma char.';
+$string['contexttagstitle'] = 'Context TAGs';
+$string['contexttags'] = 'Context TAGs<br>(divided by comma)';
+$string['contexttags_help'] = 'Context TAGs are used to manage reports. TAGs are divided by a comma char.';
 
 // Columns
 $string['column'] = "Column";
@@ -298,6 +303,12 @@ $string['categories'] = 'Categories';
 $string['parentcategory'] = 'Parent category';
 $string['filtercategories'] = 'Filter categories';
 $string['filtercategories_summary'] = 'To filter by category';
+$string['firstlevelcategories'] = 'Categories - First level';
+$string['filterfirstlevelcategories'] = 'Filter first level categories';
+$string['filterfirstlevelcategories_summary'] = 'Use: %%FILTER_FLSUBCATEGORIES:mdl_course_category.path%%';
+$string['coursemodule'] = 'Course module';
+$string['filtercoursemodule'] = 'Course Resources and Activities';
+$string['filtercoursemodule_summary'] = 'Use: %%FILTER_MODULE:mdl_modules.id%%';
 
 $string['includesubcats'] = 'Include subcategories';
 
