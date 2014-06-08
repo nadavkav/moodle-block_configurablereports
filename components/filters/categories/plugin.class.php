@@ -48,9 +48,14 @@ class plugin_categories extends plugin_base{
 		} else {
 			if (preg_match("/%%FILTER_CATEGORIES:([^%]+)%%/i",$finalelements, $output)) {
 				$replace = ' AND '.$output[1].' = '.$filter_categories;
-				return str_replace('%%FILTER_CATEGORIES:'.$output[1].'%%', $replace, $finalelements);
+                $finalelements = str_replace('%%FILTER_CATEGORIES:'.$output[1].'%%', $replace, $finalelements);
 			}
-		}
+            // Once more... In case we have a different synatx
+            if (preg_match("/%%FILTER_CATEGORIES:([^%]+)%%/i",$finalelements, $output)) {
+                $replace = ' AND '.$output[1].' = '.$filter_categories;
+                $finalelements = str_replace('%%FILTER_CATEGORIES:'.$output[1].'%%', $replace, $finalelements);
+            }
+        }
 		return $finalelements;
 	}
 
