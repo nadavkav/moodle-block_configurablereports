@@ -61,13 +61,15 @@ And Special filters (if available!):
 %%FILTER_SEMESTER:table.field%%
 %%FILTER_YEARNUMERIC:table.field%%
 %%FILTER_YEARHEBREW:table.field%%
-%%FILTER_COURSES:table.field%%
+%%FILTER_COURSES:mdl_course.id%%
 %%FILTER_MYCOURSE:table.field%%
-%%FILTER_CATEGORIES:table.field%%
-%%FILTER_SUBCATEGORIES:table.field%%
+%%FILTER_CATEGORIES:mdl_course.category%%
+%%FILTER_SUBCATEGORIES:mdl_course_category.path%%
+%%FILTER_FLSUBCATEGORIES:mdl_course_category.path%%
 %%FILTER_ROLE:table.field%%
 %%FILTER_STARTTIME:l.time:>%% %%FILTER_ENDTIME:l.time:<%% ('<', '>', '<=', '>=', '~')
 %%FILTER_COURSEMODULEID%% , %%FILTER_COURSEMODULEFIELDS%% , %%FILTER_COURSEMODULE%%
 %%FILTER_USERS:table.field%%
 %%FILTER_SYSTEMUSER:table.field%%
 %%FILTER_COURSEUSER:table.field%%
+%%FILTER_MODULE:mdl_moduels.id%%
