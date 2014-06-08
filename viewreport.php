@@ -83,7 +83,7 @@
     $filters = (isset($components['filters']['elements']))? $components['filters']['elements']: array();
 
     // Display full report or Enable the user to use the filters first
-    if(!empty($filters) AND empty($_GET['fullreport'])) {
+    if(!empty($filters) AND empty($_GET['fullreport']) AND !$download) {
         // Do we have any filters in this report?
         // & we are not yet requested to display a full report...
         $filterisactive = false;
