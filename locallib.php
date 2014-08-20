@@ -51,6 +51,8 @@
 
         $script = "$(document).ready(function() {
             var oTable = $('$cssid').dataTable({
+                'iDisplayLength': 25,
+		        'aLengthMenu': [[25, 50, 100, 250, -1], [25, 50, 100, 250, 'All']],
                 'bAutoWidth': false,
                 'sPaginationType': 'full_numbers',
 //                'sScrollX': '100%',
@@ -268,7 +270,7 @@ function cr_get_my_reports($courseid, $userid, $allcourses=true){
     if (!empty($table->summary)) {
         $output .= " summary=\"$table->summary\"";
     }
-    $output .= " cellpadding=\"$table->cellpadding\" cellspacing=\"$table->cellspacing\" class=\"$table->class boxalign$table->tablealign\" $tableid>\n";
+    $output .= " cellpadding=\"$table->cellpadding\" cellspacing=\"$table->cellspacing\" class=\"$table->class boxalign$table->tablealign\" $tableid rules=\"all\">\n";
 
     $countcols = 0;
     $isuserid = -1;
