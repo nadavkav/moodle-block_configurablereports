@@ -36,6 +36,7 @@ class conditions_form extends moodleform {
 
 		$mform->addElement('static', 'help','',get_string('conditionexprhelp','block_configurable_reports'));
         $mform->addElement('text', 'conditionexpr', get_string('conditionexpr','block_configurable_reports'),'size="50"');
+        $mform->setType('conditionexpr', PARAM_RAW);
 		$mform->addHelpButton('conditionexpr','conditionexpr_conditions', 'block_configurable_reports');
 	   
         // buttons
