@@ -443,4 +443,13 @@ $string['email_message'] = 'Message';
 $string['email_send'] = 'Send';
 $string['sendemails'] = 'Send eMails';
 
+$string['configurable_reports:myaddinstance'] = 'Add a new configurable_reports block to My home';
 
+// Events
+$string['eventreportviewed'] = 'Report viewed';
+$string['eventreportedited'] = 'Report edited';
+$string['eventreportcreated'] = 'Report created';
+$string['eventreportdeleted'] = 'Report deleted';
+$string['eventreportduplicated'] = 'Report duplicated';
+$string['eventreportshowed'] = 'Report showed';
+$string['eventreporthidden'] = 'Report hidden';

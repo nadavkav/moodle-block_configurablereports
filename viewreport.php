@@ -132,7 +132,9 @@
 	$download = ($download && $format && strpos($report->export,$format.',') !== false)? true : false;
 
 	$action = ($download)? 'download' : 'view';
-	add_to_log($report->courseid, 'configurable_reports', $action, '/block/configurable_reports/viewreport.php?id='.$id, $report->name);
+	//add_to_log($report->courseid, 'configurable_reports', $action, '/block/configurable_reports/viewreport.php?id='.$id, $report->name);
+    // TODO: create a special event for download?
+    \block_configurable_reports\event\report_viewed::create_from_report($report, $context)->trigger();
 
 	// No download, build navigation header etc..
 	if (!$download) {
