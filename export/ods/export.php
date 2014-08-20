@@ -57,7 +57,13 @@ function export_report($report){
     
     foreach($matrix as $ri=>$col){
         foreach($col as $ci=>$cv){
-            $myxls->write_string($ri,$ci,$cv);
+            // TODO: create numeric export option
+//            if (is_number($cv)) {
+//                $myxls->write_number($ri,$ci,$cv);
+//            } else {
+                $myxls->write_string($ri,$ci,$cv);
+//            }
+
         }
     }
     
