@@ -102,7 +102,7 @@ class report_edit_form extends moodleform {
         $mform->setType('courseid', PARAM_INT);
 
         // buttons
-        $this->add_action_buttons(true, get_string('add'));
+        $this->add_action_buttons(true, get_string('update'));
 
     }
 
