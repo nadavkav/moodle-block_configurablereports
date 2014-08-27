@@ -54,7 +54,7 @@
 		print_error('badpermissions','block_configurable_reports');
 
 	$downloadfilename = clean_filename(format_string($report->name)).'.xml';
-	$version = $DB->get_field('block','version',array('name' => 'configurable_reports'));
+    $version = $DB->get_field('config_plugins' ,'value', array('plugin' => 'block_configurable_reports', 'name'=>'version'));
 	if(!$version)
 		print_error("Plugin not found");
 
