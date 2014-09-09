@@ -308,7 +308,7 @@ $string['filterfirstlevelcategories'] = 'Filter first level categories';
 $string['filterfirstlevelcategories_summary'] = 'Use: %%FILTER_FLSUBCATEGORIES:mdl_course_category.path%%';
 $string['coursemodule'] = 'Course module';
 $string['filtercoursemodule'] = 'Course Resources and Activities';
-$string['filtercoursemodule_summary'] = 'Use: %%FILTER_MODULE:mdl_modules.id%%';
+$string['filtercoursemodule_summary'] = 'Use: %%FILTER_COURSEMODULE:mdl_modules.id%%';
 
 $string['includesubcats'] = 'Include subcategories';
 

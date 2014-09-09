@@ -29,26 +29,26 @@ class plugin_coursemodule extends plugin_base{
 	function init(){
 		$this->form = false;
 		$this->unique = true;
-		$this->fullname = get_string('filtermodule', 'block_configurable_reports');
+		$this->fullname = get_string('filtercoursemodule', 'block_configurable_reports');
 		$this->reporttypes = array('courses','sql');
 	}
 
 	function summary($data){
-		return get_string('filtermodule_summary', 'block_configurable_reports');
+		return get_string('filtercoursemodule_summary', 'block_configurable_reports');
 	}
 
 	function execute($finalelements, $data){
 
-		$filter_module = optional_param('filter_module', 0 ,PARAM_INT);
-		if(!$filter_module)
+		$filter_coursemodule = optional_param('filter_coursemodule', 0 ,PARAM_INT);
+		if(!$filter_coursemodule)
 			return $finalelements;
 
 		if($this->report->type != 'sql'){
-				return array($filter_module);
+				return array($filter_coursemodule);
 		} else {
-			if(preg_match("/%%FILTER_MODULE:([^%]+)%%/i", $finalelements, $output)){
-				$replace = ' AND '.$output[1].' = '.$filter_module;
-				return str_replace('%%FILTER_MODULE:'.$output[1].'%%', $replace, $finalelements);
+			if(preg_match("/%%FILTER_COURSEMODULE:([^%]+)%%/i", $finalelements, $output)){
+				$replace = ' AND '.$output[1].' = '.$filter_coursemodule;
+				return str_replace('%%FILTER_COURSEMODULE:'.$output[1].'%%', $replace, $finalelements);
 			}
 		}
 		return $finalelements;
@@ -57,7 +57,7 @@ class plugin_coursemodule extends plugin_base{
 	function print_filter(&$mform){
 		global $remoteDB, $CFG;
 
-		//$filter_module = optional_param('filter_module', 0, PARAM_INT);
+		//$filter_coursemodule = optional_param('filter_coursemodule', 0, PARAM_INT);
 
 		$reportclassname = 'report_'.$this->report->type;
 		$reportclass = new $reportclassname($this->report);
@@ -66,26 +66,26 @@ class plugin_coursemodule extends plugin_base{
 			$components = cr_unserialize($this->report->components);
 			$conditions = $components['conditions'];
 
-            $modulelist = $reportclass->elements_by_conditions($conditions);
+            $coursemodulelist = $reportclass->elements_by_conditions($conditions);
 		} else {
-            $modulelist = array_keys($remoteDB->get_records('modules'));
+            $coursemodulelist = array_keys($remoteDB->get_records('modules'));
 		}
 
-		$moduleoptions = array();
-		$moduleoptions[0] = get_string('filter_all', 'block_configurable_reports');
+		$coursemoduleoptions = array();
+		$coursemoduleoptions[0] = get_string('filter_all', 'block_configurable_reports');
 
-		if(!empty($modulelist)){
-			list($usql, $params) = $remoteDB->get_in_or_equal($modulelist);
-			$modules = $remoteDB->get_records_select('modules', "id $usql", $params);
+		if(!empty($coursemodulelist)){
+			list($usql, $params) = $remoteDB->get_in_or_equal($coursemodulelist);
+			$coursemodules = $remoteDB->get_records_select('modules', "id $usql", $params);
 
-			foreach($modules as $m){
-				$modulesoptions[$m->id] = format_string($m->name).' - '.get_string('pluginname', $m->name);
+			foreach($coursemodules as $m){
+				$coursemodulesoptions[$m->id] = format_string($m->name).' - '.get_string('pluginname', $m->name);
 			}
 		}
 
-		$mform->addElement('select', 'filter_module', get_string('coursemodule', 'block_configurable_reports'),
-            $modulesoptions);
-		$mform->setType('filter_module', PARAM_INT);
+		$mform->addElement('select', 'filter_coursemodule', get_string('coursemodule', 'block_configurable_reports'),
+            $coursemodulesoptions);
+		$mform->setType('filter_coursemodule', PARAM_INT);
 
 	}
 
