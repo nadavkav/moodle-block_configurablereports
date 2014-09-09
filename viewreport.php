@@ -134,7 +134,7 @@
 	$action = ($download)? 'download' : 'view';
 	//add_to_log($report->courseid, 'configurable_reports', $action, '/block/configurable_reports/viewreport.php?id='.$id, $report->name);
     // TODO: create a special event for download?
-    \block_configurable_reports\event\report_viewed::create_from_report($report, $context)->trigger();
+    \block_configurable_reports\event\report_viewed::create_from_report($report, context_course::instance($course->id))->trigger();
 
 	// No download, build navigation header etc..
 	if (!$download) {
