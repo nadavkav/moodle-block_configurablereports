@@ -101,7 +101,7 @@ if(! has_capability('block/configurable_reports:managereports', $context) && ! h
 		else if ($data = $editform->get_data()) {
 			$compclass->form_process_data($editform);
 			//add_to_log($courseid, 'configurable_reports', 'edit', '', $report->name);
-            \block_configurable_reports\event\report_edited::create_from_report($report, $context)->trigger();
+            \block_configurable_reports\event\report_edited::create_from_report($report, context_course::instance($course->id))->trigger();
 		}
 
 		$compclass->form_set_data($editform);

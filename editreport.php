@@ -104,9 +104,9 @@
 		$action = ($visible)? 'showed' : 'hidden';
 		//add_to_log($report->courseid, 'configurable_reports', 'report '.$action, '/block/configurable_reports/editreport.php?id='.$report->id, $report->id);
         if ($action == 'showed')
-            \block_configurable_reports\event\report_showed::create_from_report($report, $context)->trigger();
+            \block_configurable_reports\event\report_showed::create_from_report($report, context_course::instance($course->id))->trigger();
         if ($action == 'hidden')
-            \block_configurable_reports\event\report_hidden::create_from_report($report, $context)->trigger();
+            \block_configurable_reports\event\report_hidden::create_from_report($report, context_course::instance($course->id))->trigger();
 
 		header("Location: $CFG->wwwroot/blocks/configurable_reports/managereport.php?courseid=$courseid");
 		die;
@@ -121,7 +121,7 @@
 		if(! $newreportid = $DB->insert_record('block_configurable_reports',$newreport))
 			print_error('cannotduplicate','block_configurable_reports');
 		//add_to_log($newreport->courseid, 'configurable_reports', 'report duplicated', '/block/configurable_reports/editreport.php?id='.$newreportid, $id);
-        \block_configurable_reports\event\report_deleted::create_from_report($newreportid, $context)->trigger();
+        \block_configurable_reports\event\report_deleted::create_from_report($newreportid, context_course::instance($course->id))->trigger();
 
 		header("Location: $CFG->wwwroot/blocks/configurable_reports/managereport.php?courseid=$courseid");
 		die;
@@ -146,7 +146,7 @@
 		else{
 			if($DB->delete_records('block_configurable_reports',array('id'=>$report->id)))
 				//add_to_log($report->courseid, 'configurable_reports', 'report deleted', '/block/configurable_reports/editreport.php?id='.$report->id, $report->id);
-                \block_configurable_reports\event\report_deleted::create_from_report($report, $context)->trigger();
+                \block_configurable_reports\event\report_deleted::create_from_report($report, context_course::instance($course->id))->trigger();
 			header("Location: $CFG->wwwroot/blocks/configurable_reports/managereport.php?courseid=$courseid");
 			die;
 		}
@@ -211,8 +211,9 @@
 			if(! $lastid = $DB->insert_record('block_configurable_reports',$data)){
 				print_error('errorsavingreport','block_configurable_reports');
 			}else{
+                $report = $DB->get_record('block_configurable_reports', array('id'=>$lastid));
 				//add_to_log($courseid, 'configurable_reports', 'report created', '/block/configurable_reports/editreport.php?id='.$lastid, $data->name);
-                \block_configurable_reports\event\report_created::create_from_report($report, $context)->trigger();
+                \block_configurable_reports\event\report_created::create_from_report($report, context_course::instance($course->id))->trigger();
 				$reportclass = new $reportclassname($lastid);
 				redirect($CFG->wwwroot.'/blocks/configurable_reports/editcomp.php?id='.$lastid.'&comp='.$reportclass->components[0]);
 			}
