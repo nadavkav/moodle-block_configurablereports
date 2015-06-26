@@ -83,16 +83,19 @@
 		$PAGE->set_url('/blocks/configurable_reports/editreport.php', null);
 	}
 
-	if($report)
+	if($report) {
 		$title = format_string($report->name);
-	else
+		$report_courseid = $report->courseid;
+	} else {
 		$title = get_string('report','block_configurable_reports');
+		$report_courseid = $courseid;
+	}
 
-    $courseurl =  new moodle_url($CFG->wwwroot.'/course/view.php',array('id'=>$courseid));
+    $courseurl =  new moodle_url($CFG->wwwroot.'/course/view.php', array('id'=>$courseid));
     $PAGE->navbar->add($course->shortname, $courseurl);
 
-    $managereporturl =  new moodle_url($CFG->wwwroot.'/blocks/configurable_reports/managereport.php',array('courseid'=>$report->courseid));
-    $PAGE->navbar->add(get_string('managereports','block_configurable_reports'), $managereporturl);
+    $managereporturl =  new moodle_url($CFG->wwwroot.'/blocks/configurable_reports/managereport.php', array('courseid'=>$report_courseid));
+    $PAGE->navbar->add(get_string('managereports', 'block_configurable_reports'), $managereporturl);
 
     $PAGE->navbar->add($title);
 
