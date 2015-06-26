@@ -46,6 +46,7 @@ class courseparent_form extends moodleform {
 		}
 		
 		$mform->addElement('select', 'courseid', get_string('course'), $options);
+		$mform->setType('courseid', PARAM_INT);
 				
         // buttons
         $this->add_action_buttons(true, get_string('add'));

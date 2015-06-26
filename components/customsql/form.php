@@ -44,6 +44,7 @@ class customsql_form extends moodleform {
         $mform->setType('querysql', PARAM_RAW);
 
         $mform->addElement('hidden','courseid',$COURSE->id);
+        $mform->setType('courseid', PARAM_INT);
 
         $this->add_action_buttons();
 

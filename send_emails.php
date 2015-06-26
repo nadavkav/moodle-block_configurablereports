@@ -23,7 +23,9 @@ class sendemail_form extends moodleform {
         );
 
         $mform->addElement('hidden', 'usersids', $this->_customdata['usersids']);
+        $mform->setType('usersids', PARAM_INT);
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
+        $mform->setType('courseid', PARAM_INT);
 
         $mform->addElement('text', 'subject', get_string('email_subject','block_configurable_reports'));
         $mform->setType('subject', PARAM_TEXT);

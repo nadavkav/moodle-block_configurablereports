@@ -48,6 +48,7 @@ class report_edit_form extends moodleform {
 
         $mform->addElement('text', 'alias', get_string('alias','block_configurable_reports'),array('maxlength' => 64, 'size' => 30));
         $mform->addHelpButton('alias','alias', 'block_configurable_reports');
+        $mform->setType('alias', PARAM_ALPHA);
 
         $mform->addElement('checkbox', 'subreport', get_string('subreport','block_configurable_reports') /*,get_string('subreportdescription','block_configurable_reports')*/ );
         $mform->addHelpButton('subreport', 'subreport', 'block_configurable_reports');
@@ -81,9 +82,11 @@ class report_edit_form extends moodleform {
 
         $mform->addElement('text', 'tags', get_string('tags','block_configurable_reports'),array('maxlength' => 256, 'size' => 50));
         $mform->addHelpButton('tags', 'tags', 'block_configurable_reports');
+        $mform->setType('tags', PARAM_RAW);
 
         $mform->addElement('text', 'contexttags', get_string('contexttags','block_configurable_reports'),array('maxlength' => 256, 'size' => 50));
         $mform->addHelpButton('contexttags', 'contexttags', 'block_configurable_reports');
+        $mform->setType('contexttags', PARAM_RAW);
 
         $mform->addElement('header', 'exportoptions', get_string('exportoptions', 'block_configurable_reports'));
 		$options = cr_get_export_plugins();
@@ -94,6 +97,7 @@ class report_edit_form extends moodleform {
 
 		if(isset($this->_customdata['report']->id) && $this->_customdata['report']->id)
 			$mform->addElement('hidden','id',$this->_customdata['report']->id);
+            $mform->setType('id', PARAM_INT);
         if (!empty($adminmode)) {
             $mform->addElement('text','courseid',get_string("setcourseid",'block_configurable_reports'), $this->_customdata['courseid']);
         } else {
