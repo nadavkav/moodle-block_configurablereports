@@ -84,7 +84,7 @@ class component_permissions extends component_base{
 			$fdata = new stdclass;
 			$components = cr_unserialize($this->config->components);
 			//print_r($components);exit;
-			$conditionsconfig = (isset($components['permissions']['config']))? $components['permissions']['config'] : new stdclass;
+			$conditionsconfig = (isset($components['permissions']['config']))? $components['permissions']['config'] : new stdClass;
 			
 			if(!isset($conditionsconfig->conditionexpr)){
 				$fdata->conditionexpr = '';
@@ -94,7 +94,7 @@ class component_permissions extends component_base{
 			$fdata->conditionexpr = $conditionsconfig->conditionexpr;
 			
             if(!array_key_exists('config', $components['permissions'])) {
-                $components['permissions']['config'] = new StdClass;
+                $components['permissions']['config'] = new stdClass;
             }
 
 			$components['permissions']['config']->conditionexpr = $fdata->conditionexpr;
