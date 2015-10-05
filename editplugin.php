@@ -154,7 +154,7 @@
 		}
 		else if ($data = $editform->get_data()) {
 			//add_to_log($report->courseid, 'configurable_reports', 'edit', '', $report->name);
-            \block_configurable_reports\event\report_edited::create_from_report($report, $context)->trigger();
+            \block_configurable_reports\event\report_edited::create_from_report($report, context_course::instance($course->id))->trigger();
 			if(!empty($cdata)){
 				// cr_serialize() will add slashes
 
