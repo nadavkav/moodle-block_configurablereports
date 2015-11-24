@@ -73,3 +73,6 @@ And Special filters (if available!):
 %%FILTER_SYSTEMUSER:table.field%%
 %%FILTER_COURSEUSER:table.field%%
 %%FILTER_MODULE:mdl_moduels.id%%
+
+== Performance ==
+It is advisable to create a new user in the DB with special resource restrictions (http://dev.mysql.com/doc/refman/5.5/en/user-resources.html) to avoid load on the DB when using Moodle's $DB user's connections. Another alternative would be to run the reports on a different DB or an entire new DB server.
