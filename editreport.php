@@ -116,15 +116,16 @@
 	}
 
 	if($duplicate && confirm_sesskey()){
-		$newreport = new stdclass();
+		$newreport = new stdClass();
 		$newreport = $report;
 		unset($newreport->id);
 		$newreport->name = get_string('copyasnoun').' '.$newreport->name;
-		$newreport->summary = $newreport->summary;
-		if(! $newreportid = $DB->insert_record('block_configurable_reports',$newreport))
-			print_error('cannotduplicate','block_configurable_reports');
-		//add_to_log($newreport->courseid, 'configurable_reports', 'report duplicated', '/block/configurable_reports/editreport.php?id='.$newreportid, $id);
-        \block_configurable_reports\event\report_deleted::create_from_report($newreportid, context_course::instance($course->id))->trigger();
+        if (!$newreportid = $DB->insert_record('block_configurable_reports', $newreport)) {
+            print_error('cannotduplicate','block_configurable_reports');
+        }
+        $newreport->id = $newreportid;
+        \block_configurable_reports\event\report_duplicated::create_from_report($newreport,
+            context_course::instance($course->id))->trigger();
 
 		header("Location: $CFG->wwwroot/blocks/configurable_reports/managereport.php?courseid=$courseid");
 		die;
