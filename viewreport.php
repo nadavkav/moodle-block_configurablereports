@@ -178,6 +178,10 @@
 			include('tabs.php');
 		}
 
+        if ($reportclass->config->sqldebug) {
+            echo $reportclass->sql;
+        }
+
         // Print the report HTML
         $reportclass->print_report_page($context);
 

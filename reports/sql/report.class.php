@@ -35,6 +35,7 @@ class report_sql extends report_base {
 
         // Enable debug mode from SQL query.
         $this->config->debug = (strpos($sql, '%%DEBUG%%') !== false) ? true : false;
+        $this->config->sqldebug = (strpos($sql, '%%SQLDEBUG%%') !== false) ? true : false;
 
         // Pass special custom undefined variable as filter.
         // Security warning !!! can be used for sql injection.
@@ -111,6 +112,75 @@ class report_sql extends report_base {
         return $results;
 	}
 
+    function execute_query_debug($sql, $limitnum = REPORT_CUSTOMSQL_MAX_RECORDS /* ignored */) {
+        global $remoteDB, $DB, $CFG;
+
+        $sql = preg_replace('/\bprefix_(?=\w+)/i', $CFG->prefix, $sql);
+
+        // Use a custom $remoteDB (and not current system's $DB)
+        // todo: major security issue
+        $remoteDBhost = get_config('block_configurable_reports', 'dbhost');
+        if (empty($remoteDBhost)) {
+            $remoteDBhost = $CFG->dbhost;
+        }
+        $remoteDBname = get_config('block_configurable_reports', 'dbname');
+        if (empty($remoteDBname)) {
+            $remoteDBname = $CFG->dbname;
+        }
+        $remoteDBuser = get_config('block_configurable_reports', 'dbuser');
+        if (empty($remoteDBuser)) {
+            $remoteDBuser = $CFG->dbuser;
+        }
+        $remoteDBpass = get_config('block_configurable_reports', 'dbpass');
+        if (empty($remoteDBpass)) {
+            $remoteDBpass = $CFG->dbpass;
+        }
+
+        $reportlimit = get_config('block_configurable_reports', 'reportlimit');
+        if (empty($reportlimit) or $reportlimit == '0') {
+            $reportlimit = REPORT_CUSTOMSQL_MAX_RECORDS;
+        }
+
+        $db_class = get_class($DB);
+        $remoteDB = new $db_class();
+        $remoteDB->connect($remoteDBhost, $remoteDBuser, $remoteDBpass, $remoteDBname, $CFG->prefix);
+
+        $params = null;
+        list($sql, $params, $type) = $remoteDB->fix_sql_params($sql, $params);
+        $rawsql = $this->emulate_bound_params($sql, $params);
+        return $rawsql;
+    }
+
+    /**
+     * Very ugly hack which emulates bound parameters in queries
+     * because prepared statements do not use query cache.
+     */
+    protected function emulate_bound_params($sql, array $params=null) {
+        if (empty($params)) {
+            return $sql;
+        }
+        // ok, we have verified sql statement with ? and correct number of params
+        $parts = array_reverse(explode('?', $sql));
+        $return = array_pop($parts);
+        foreach ($params as $param) {
+            if (is_bool($param)) {
+                $return .= (int)$param;
+            } else if (is_null($param)) {
+                $return .= 'NULL';
+            } else if (is_number($param)) {
+                $return .= "'".$param."'"; // we have to always use strings because mysql is using weird automatic int casting
+            } else if (is_float($param)) {
+                $return .= $param;
+            } else {
+                // todo: fixme
+                //$param = $this->mysqli->real_escape_string($param);
+                $return .= "'$param'";
+            }
+            $return .= array_pop($parts);
+        }
+        return $return;
+    }
+
 	function create_report(){
 		global $DB, $CFG;
 
@@ -128,60 +198,64 @@ class report_sql extends report_base {
 		$config = (isset($components['customsql']['config']))? $components['customsql']['config'] : new stdclass;
         $totalrecords = 0;
 
-		if(isset($config->querysql)){
+        if (isset($config->querysql)) {
 			// FILTERS
 			$sql = $config->querysql;
 			if (!empty($filters)) {
-				foreach($filters as $f){
-					require_once($CFG->dirroot.'/blocks/configurable_reports/components/filters/'.$f['pluginname'].'/plugin.class.php');
-					$classname = 'plugin_'.$f['pluginname'];
-					$class = new $classname($this->config);
-					$sql = $class->execute($sql, $f['formdata']);
-				}
-			}
+                foreach ($filters as $f) {
+                    require_once($CFG->dirroot . '/blocks/configurable_reports/components/filters/' . $f['pluginname'] . '/plugin.class.php');
+                    $classname = 'plugin_' . $f['pluginname'];
+                    $class = new $classname($this->config);
+                    $sql = $class->execute($sql, $f['formdata']);
+                }
+            }
 
 			$sql = $this->prepare_sql($sql);
 
-			if ($rs = $this->execute_query($sql)) {
-		        foreach ($rs as $row) {
-					if(empty($finaltable)){
-						foreach($row as $colname=>$value){
-							$tablehead[] = str_replace('_', ' ', $colname);
-						}
-					}
-                    $array_row = array_values((array) $row);
-                    foreach($array_row as $ii => $cell) {
-                        $array_row[$ii] = str_replace('[[QUESTIONMARK]]', '?', $cell);
+            if ($this->config->sqldebug) {
+                $this->sql = $this->execute_query_debug($sql);
+            } else {
+                if ($rs = $this->execute_query($sql)) {
+                    foreach ($rs as $row) {
+                        if(empty($finaltable)){
+                            foreach($row as $colname=>$value){
+                                $tablehead[] = str_replace('_', ' ', $colname);
+                            }
+                        }
+                        $array_row = array_values((array) $row);
+                        foreach($array_row as $ii => $cell) {
+                            $array_row[$ii] = str_replace('[[QUESTIONMARK]]', '?', $cell);
+                        }
+                        $totalrecords++;
+                        $finaltable[] = $array_row;
                     }
-                    $totalrecords++;
-					$finaltable[] = $array_row;
-				}
+                }
+                $this->sql = $sql;
+                $this->totalrecords = $totalrecords;
+
+                // Calcs
+                $finalcalcs = $this->get_calcs($finaltable,$tablehead);
+
+                $table = new stdclass;
+                $table->id = 'reporttable';
+                $table->data = $finaltable;
+                $table->head = $tablehead;
+
+                $calcs = new html_table();
+                $calcs->id = 'calcstable';
+                $calcs->data = array($finalcalcs);
+                $calcs->head = $tablehead;
+
+                if(!$this->finalreport) {
+                    $this->finalreport = new StdClass;
+                }
+                $this->finalreport->table = $table;
+                $this->finalreport->calcs = $calcs;
+
+                return true;
             }
 		}
-        $this->sql = $sql;
-        $this->totalrecords = $totalrecords;
-
-		// Calcs
-
-		$finalcalcs = $this->get_calcs($finaltable,$tablehead);
-
-		$table = new stdclass;
-		$table->id = 'reporttable';
-		$table->data = $finaltable;
-		$table->head = $tablehead;
-
-		$calcs = new html_table();
-        $calcs->id = 'calcstable';
-		$calcs->data = array($finalcalcs);
-		$calcs->head = $tablehead;
-
-        if(!$this->finalreport) {
-            $this->finalreport = new StdClass;
-        }
-		$this->finalreport->table = $table;
-		$this->finalreport->calcs = $calcs;
-
-		return true;
+        return false;
 	}
 
 }
