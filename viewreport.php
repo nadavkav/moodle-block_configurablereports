@@ -103,7 +103,9 @@
             $PAGE->set_cacheable( true);
             echo $OUTPUT->header();
 
-            if(has_capability('block/configurable_reports:managereports', $context) || (has_capability('block/configurable_reports:manageownreports', $context)) && $report->ownerid == $USER->id ){
+            if(has_capability('block/configurable_reports:managereports', $context)
+                || (has_capability('block/configurable_reports:manageownreports', $context))
+                && $report->ownerid == $USER->id ){
                 $currenttab = 'viewreport';
                 include('tabs.php');
             }
@@ -134,9 +136,18 @@
 	$action = ($download)? 'download' : 'view';
 	//add_to_log($report->courseid, 'configurable_reports', $action, '/block/configurable_reports/viewreport.php?id='.$id, $report->name);
     // TODO: create a special event for download?
-    \block_configurable_reports\event\report_viewed::create_from_report($report, context_course::instance($course->id))->trigger();
+    \block_configurable_reports\event\report_viewed::create_from_report($report,
+        context_course::instance($course->id))->trigger();
 
-	// No download, build navigation header etc..
+    if (get_config('block_configurable_reports', 'reporttableui') == 'datatables') {
+        $PAGE->requires->css(new moodle_url('js/datatables/media/css/jquery.dataTables.css'));
+    }
+
+    // Chartlets
+    // TODO: Check if we need to load and initiate chartlets lib.
+    $PAGE->requires->js('/blocks/configurable_reports/js/chartlets/chartlets.min.js');
+
+// No download, build navigation header etc..
 	if (!$download) {
 		$reportclass->check_filters_request();
 		$reportname = format_string($report->name);
@@ -149,9 +160,9 @@
             //$courseurl =  new moodle_url($CFG->wwwroot.'/course/view.php',array('id'=>$report->courseid));
             //$PAGE->navbar->add($COURSE->shortname, $courseurl);
 
-            $managereporturl =  new moodle_url($CFG->wwwroot.'/blocks/configurable_reports/managereport.php',array('courseid'=>$report->courseid));
+            $managereporturl =  new moodle_url($CFG->wwwroot.'/blocks/configurable_reports/managereport.php',
+                array('courseid'=>$report->courseid));
             $PAGE->navbar->add(get_string('managereports','block_configurable_reports'), $managereporturl);
-
             $PAGE->navbar->add($report->name);
         }
 
@@ -160,7 +171,9 @@
 		$PAGE->set_cacheable( true);
 		echo $OUTPUT->header();
 
-        if(has_capability('block/configurable_reports:managereports', $context) || (has_capability('block/configurable_reports:manageownreports', $context)) && $report->ownerid == $USER->id ){
+        if(has_capability('block/configurable_reports:managereports', $context)
+            || (has_capability('block/configurable_reports:manageownreports', $context))
+            && $report->ownerid == $USER->id ){
 			$currenttab = 'viewreport';
 			include('tabs.php');
 		}
@@ -178,12 +191,8 @@
 		die;
 	}
 
-    if (get_config('block_configurable_reports', 'reporttableui') == 'datatables') {
-        //@import url("../blocks/configurable_reports/js/datatables/media/css/jquery.dataTables.css");
-        $datatables_css = file_get_contents('js/datatables/media/css/jquery.dataTables.css');
-        echo "<style>{$datatables_css}</style>";
-    }
-
+    // TODO: Check if we need to load and initiate chartlets lib.
+    echo \html_writer::nonempty_tag('script', 'Y.on("domready", function(){ Chartlets.render(); });');
 	// Never reached if download = true
     echo $OUTPUT->footer();
 

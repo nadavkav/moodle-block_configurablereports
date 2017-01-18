@@ -56,7 +56,7 @@
 
 	$PAGE->set_url('/blocks/configurable_reports/editreport.php', array('id'=>$id,'comp'=>$comp));
 	$PAGE->set_context($context);
-	$PAGE->set_pagelayout('incourse');
+	$PAGE->set_pagelayout('report');
 
     if (get_config('block_configurable_reports', 'sqlsyntaxhighlight')) {
         $PAGE->requires->js('/blocks/configurable_reports/js/codemirror/lib/codemirror.js');
@@ -68,7 +68,8 @@
     $PAGE->requires->js('/blocks/configurable_reports/js/configurable_reports.js');
     $PAGE->requires->js_init_call('M.block_configurable_reports.init');
 
-if(! has_capability('block/configurable_reports:managereports', $context) && ! has_capability('block/configurable_reports:manageownreports', $context))
+    if(! has_capability('block/configurable_reports:managereports', $context)
+        && ! has_capability('block/configurable_reports:manageownreports', $context))
 		print_error('badpermissions');
 
 
@@ -144,6 +145,17 @@ if(! has_capability('block/configurable_reports:managereports', $context) && ! h
 	$PAGE->set_heading($title);
 	$PAGE->set_cacheable(true);
 
+    if (get_config('block_configurable_reports', 'sqlsyntaxhighlight')) {
+        //@import url("../blocks/configurable_reports/js/codemirror/lib/codemirror.css");
+        //@import url("../blocks/configurable_reports/js/codemirror/addon/display/fullscreen.css");
+        //$codemirror_css1 = file_get_contents('js/codemirror/lib/codemirror.css');
+        //$codemirror_css2 = file_get_contents('js/codemirror/addon/display/fullscreen.css');
+        //echo "<style>$codemirror_css1</style>";
+        //echo "<style>$codemirror_css2</style>";
+        $PAGE->requires->css(new moodle_url('js/codemirror/lib/codemirror.css'));
+        $PAGE->requires->css(new moodle_url('js/codemirror/addon/display/fullscreen.css'));
+    }
+
 	echo $OUTPUT->header();
 
 	$currenttab = $comp;
@@ -207,14 +219,5 @@ if(! has_capability('block/configurable_reports:managereports', $context) && ! h
 		echo '</p>';
 		echo '</div>';
 	}
-
-    if (get_config('block_configurable_reports', 'sqlsyntaxhighlight')) {
-        //@import url("../blocks/configurable_reports/js/codemirror/lib/codemirror.css");
-        //@import url("../blocks/configurable_reports/js/codemirror/addon/display/fullscreen.css");
-        $codemirror_css1 = file_get_contents('js/codemirror/lib/codemirror.css');
-        $codemirror_css2 = file_get_contents('js/codemirror/addon/display/fullscreen.css');
-        echo "<style>$codemirror_css1</style>";
-        echo "<style>$codemirror_css2</style>";
-    }
 
 	echo $OUTPUT->footer();
