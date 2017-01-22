@@ -219,7 +219,9 @@ class report_sql extends report_base {
                     foreach ($rs as $row) {
                         if(empty($finaltable)){
                             foreach($row as $colname=>$value){
-                                $tablehead[] = str_replace('_', ' ', $colname);
+                                $tableheadtemp = str_replace('_', ' ', $colname);
+                                $tableheadtemp = str_replace('[[questionmark]]', '?', $tableheadtemp);
+                                $tablehead[] = $tableheadtemp;
                             }
                         }
                         $array_row = array_values((array) $row);
