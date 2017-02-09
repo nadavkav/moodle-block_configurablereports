@@ -97,7 +97,7 @@ class block_configurable_reports extends block_list {
 
         if ($reports) {
             foreach($reports as $report){
-                if($report->visible && cr_check_report_permissions($report, $USER->id, $context)){
+                if($report->visible && !$report->subreport && cr_check_report_permissions($report, $USER->id, $context)){
                     $rname = format_string($report->name);
                     $this->content->items[] = '<a href= "'.$CFG->wwwroot.'/blocks/configurable_reports/viewreport.php?id='.$report->id.'&courseid='.$course->id.'" alt="'.$rname.'">'.$rname.'</a>';
                 }
@@ -112,7 +112,7 @@ class block_configurable_reports extends block_list {
 
             if ($reports) {
                 foreach($reports as $report) {
-                    if($report->visible && cr_check_report_permissions($report,$USER->id,$context)){
+                    if($report->visible && !$report->subreport && cr_check_report_permissions($report,$USER->id,$context)){
                         $rname = format_string($report->name);
                         $this->content->items[] = '<a href= "'.$CFG->wwwroot.'/blocks/configurable_reports/viewreport.php?id='.$report->id.'&courseid='.$course->id.'" alt="'.$rname.'">'.$rname.'</a>';
                     }
