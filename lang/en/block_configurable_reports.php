@@ -453,4 +453,7 @@ $string['eventreportdeleted'] = 'Report deleted';
 $string['eventreportduplicated'] = 'Report duplicated';
 $string['eventreportshowed'] = 'Report showed';
 $string['eventreporthidden'] = 'Report hidden';
+
 $string['scheduledqueries'] = 'Scheduled queries for configurable reports';
+$string['coursereports'] = 'Course reports';
+$string['systemreports'] = 'System (shared) reports';

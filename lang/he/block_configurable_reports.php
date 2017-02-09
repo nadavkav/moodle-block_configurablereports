@@ -322,3 +322,6 @@ $string['sendemails'] = 'שליחת דואל';
 $string['serverload'] = "MySQL max load";
 $string['serverloadinfo'] = "Set the maximum number of running MYSQL threads, above it, reports will not execute (Default is 50)";
 $string['serverloadnotice'] = 'העומס על השרת גבוהה מידיי ({$a}) להפקת הדוח, אנא נסו בעוד מספר דקות שוב.';
+
+$string['coursereports'] = 'דוחות קורס';
+$string['systemreports'] = 'דוחות מערכת (משותפים)';
