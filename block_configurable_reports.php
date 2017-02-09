@@ -128,59 +128,64 @@ class block_configurable_reports extends block_list {
 
         return $this->content;
     }
+    /*
+     * Moved to classes/task/schedualed_queries.php
+     * todo: remove this code
+     *
+        public function cron() {
 
-    public function cron() {
-        global $CFG, $DB;
+            global $CFG, $DB;
 
-        $hour = get_config('block_configurable_reports','cron_hour');
-        $min = get_config('block_configurable_reports','cron_minute');
+            $hour = get_config('block_configurable_reports','cron_hour');
+            $min = get_config('block_configurable_reports','cron_minute');
 
-        $date = usergetdate(time());
-        $usertime = mktime($date['hours'], $date['minutes'], $date['seconds'], $date['mon'], $date['mday'], $date['year']);
+            $date = usergetdate(time());
+            $usertime = mktime($date['hours'], $date['minutes'], $date['seconds'], $date['mon'], $date['mday'], $date['year']);
 
-        $crontime = mktime($hour, $min, $date['seconds'], $date['mon'], $date['mday'], $date['year']);
+            $crontime = mktime($hour, $min, $date['seconds'], $date['mon'], $date['mday'], $date['year']);
 
-        if ( ($crontime - $usertime) < 0 ) return false;
+            if ( ($crontime - $usertime) < 0 ) return false;
 
-        $lastcron = $DB->get_field('blocks', 'lastcron', array('name' => 'configurable_reports'));
-        if (!$lastcron and ($lastcron + $this->cron < time()) ) return false;
+            $lastcron = $DB->get_field('blocks', 'lastcron', array('name' => 'configurable_reports'));
+            if (!$lastcron and ($lastcron + $this->cron < time()) ) return false;
 
-        // Starting to run...
-        //$DB->set_field('blocks','lastcron',time(), array('name' => 'configurable_reports'));
+            // Starting to run...
+            //$DB->set_field('blocks','lastcron',time(), array('name' => 'configurable_reports'));
 
-        require_once($CFG->dirroot."/blocks/configurable_reports/locallib.php");
-        require_once($CFG->dirroot.'/blocks/configurable_reports/report.class.php');
-        require_once($CFG->dirroot.'/blocks/configurable_reports/reports/sql/report.class.php');
+            require_once($CFG->dirroot."/blocks/configurable_reports/locallib.php");
+            require_once($CFG->dirroot.'/blocks/configurable_reports/report.class.php');
+            require_once($CFG->dirroot.'/blocks/configurable_reports/reports/sql/report.class.php');
 
-        //mtrace("\nConfigurable report (block)");
+            //mtrace("\nConfigurable report (block)");
 
-        $reports = $DB->get_records('block_configurable_reports');
-        if ($reports) {
-            foreach ($reports as $report) {
-                // Running only SQL reports. $report->type == 'sql'
-                if ($report->type == 'sql' AND (!empty($report->cron) AND $report->cron == '1')) {
-                    $reportclass = new report_sql($report);
+            $reports = $DB->get_records('block_configurable_reports');
+            if ($reports) {
+                foreach ($reports as $report) {
+                    // Running only SQL reports. $report->type == 'sql'
+                    if ($report->type == 'sql' AND (!empty($report->cron) AND $report->cron == '1')) {
+                        $reportclass = new report_sql($report);
 
-                    // Execute it using $remoteDB
-                    $starttime = microtime(true);
-                    mtrace("\nExecuting query '$report->name'");
-                    //$results = $reportclass->create_report();
-                    $components = cr_unserialize($reportclass->config->components);
-                    $config = (isset($components['customsql']['config']))? $components['customsql']['config'] : new stdclass;
-                    $sql = $reportclass->prepare_sql($config->querysql);
-                    //if (strpos($sql, ';') !== false) {
-                        $sqlqueries = explode(';',$sql);
-                    //} else
-                    foreach ($sqlqueries as $sql) {
-                        mtrace(substr($sql,0,60)); // Show some SQL
-                        $results = $reportclass->execute_query($sql);
-                        mtrace(($results==1) ? '...OK time='.round((microtime(true) - $starttime) * 1000).'mSec' : 'Some SQL Error'.'\n');
+                        // Execute it using $remoteDB
+                        $starttime = microtime(true);
+                        mtrace("\nExecuting query '$report->name'");
+                        //$results = $reportclass->create_report();
+                        $components = cr_unserialize($reportclass->config->components);
+                        $config = (isset($components['customsql']['config']))? $components['customsql']['config'] : new stdclass;
+                        $sql = $reportclass->prepare_sql($config->querysql);
+                        //if (strpos($sql, ';') !== false) {
+                            $sqlqueries = explode(';',$sql);
+                        //} else
+                        foreach ($sqlqueries as $sql) {
+                            mtrace(substr($sql,0,60)); // Show some SQL
+                            $results = $reportclass->execute_query($sql);
+                            mtrace(($results==1) ? '...OK time='.round((microtime(true) - $starttime) * 1000).'mSec' : 'Some SQL Error'.'\n');
+                        }
+                        unset($reportclass);
                     }
-                    unset($reportclass);
                 }
             }
+            return true; // Finished OK.
         }
-        return true; // Finished OK.
-    }
+        */
 
 }
