@@ -31,11 +31,10 @@ class report_sql extends report_base {
 	}
 
 	function prepare_sql($sql) {
-		global $DB, $USER, $CFG, $COURSE;
+        global $DB, $USER, $CFG, $COURSE;
 
         // Enable debug mode from SQL query.
         $this->config->debug = (strpos($sql, '%%DEBUG%%') !== false) ? true : false;
-        $this->config->sqldebug = (strpos($sql, '%%SQLDEBUG%%') !== false) ? true : false;
 
         // Pass special custom undefined variable as filter.
         // Security warning !!! can be used for sql injection.
@@ -45,18 +44,24 @@ class report_sql extends report_base {
             $sql = str_replace('%%FILTER_VAR%%', $filter_var, $sql);
         }
 
+        $courseid = optional_param('courseid', null, PARAM_INT);
+        if (!empty($courseid)) {
+            $sql = str_replace('%%COURSEID%%', $courseid, $sql);
+        } else {
+            $sql = str_replace('%%COURSEID%%', $COURSE->id, $sql);
+        }
+
         $sql = str_replace('%%USERID%%', $USER->id, $sql);
-        $sql = str_replace('%%COURSEID%%', $COURSE->id, $sql);
         $sql = str_replace('%%CATEGORYID%%', $COURSE->category, $sql);
 
-		// See http://en.wikipedia.org/wiki/Year_2038_problem
-		$sql = str_replace(array('%%STARTTIME%%','%%ENDTIME%%'),array('0','2145938400'),$sql);
-		$sql = str_replace('%%WWWROOT%%', $CFG->wwwroot, $sql);
-		$sql = preg_replace('/%{2}[^%]+%{2}/i','',$sql);
+        // See http://en.wikipedia.org/wiki/Year_2038_problem
+        $sql = str_replace(array('%%STARTTIME%%','%%ENDTIME%%'),array('0','2145938400'),$sql);
+        $sql = str_replace('%%WWWROOT%%', $CFG->wwwroot, $sql);
+        $sql = preg_replace('/%{2}[^%]+%{2}/i','',$sql);
 
-		$sql = str_replace('?', '[[QUESTIONMARK]]', $sql);
+        $sql = str_replace('?', '[[QUESTIONMARK]]', $sql);
 
-		return $sql;
+        return $sql;
 	}
 
 	function execute_query($sql, $limitnum = REPORT_CUSTOMSQL_MAX_RECORDS /* ignored */) {
